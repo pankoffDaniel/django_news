@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+    <title>Sign In</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4" style="padding-top: 20px;">
+            <div class="section-row">
+                <h1 class="title" style="text-align: center;">{% trans 'Sign In' %}</h1>
+            </div>
+            <div class="section-row" style="margin-bottom: 20px;">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.email }}
+                                <div style="color: red">
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.password }}
+                                <div style="color: red">
+                                    {{ form.password.errors }}
+                                    {{ form.non_field_errors }}
+                                </div>
+                                <p style="margin-top: 7px;">
+                                    <span style="font-size: 14px; font-weight: bold;">
+                                        <a href="{% url 'restore' %}">{% trans 'Forgot password?' %}</a>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="primary-button" style="width: 100%;">{% trans 'Submit' %}</button>
+                        </div>
+                    </div>
+                    {{ form.captcha }}
+                </form>
+            </div>
+            <div class="section-row" style="text-align: center;">
+                <div class="section-title" style="margin-bottom: 10px;">
+                    <h2 class="title"></h2>
+                </div>
+                <h4>
+                    <a href="{% url 'register' %}">{% trans 'Not on Callie yet? Sign Up!' %}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

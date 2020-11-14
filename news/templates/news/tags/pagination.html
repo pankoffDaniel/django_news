@@ -1,0 +1,58 @@
+{% if page_obj.has_other_pages %}
+    <div class="section-row text-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                {% if page_obj.number|add:-3 >= 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{{ search }}page=1"
+                           tabindex="-1" aria-disabled="true">
+                            First
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item">
+                    <a class="page-link" href="?{{ search }}page={{ page_obj.previous_page_number }}"
+                       tabindex="-1" aria-disabled="true">
+                        &laquo;
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for page in page_obj.paginator.page_range %}
+
+                {% if page_obj.number == page %}
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" href="?{{ search }}page={{ page }}"
+                           style="background-color: #ee4266; color: #fff">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{{ search }}page={{ page }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?{{ search }}page={{ page_obj.next_page_number }}">
+                        &raquo;
+                    </a>
+                </li>
+                {% if page_obj.number|add:3 <= page_obj.paginator.num_pages %}
+                    <li class="page-item">
+                        <a class="page-link" href="?{{ search }}page={{ page_obj.paginator.num_pages }}">
+                            Last
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+        </ul>
+    </div>
+{% endif %}

@@ -1,0 +1,21 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert" id="{{ forloop.counter }}">
+                {{ message }}
+                <span class="close" onclick="closeMessage({{ forloop.counter }})"></span>
+            </div>
+        {% else %}
+            <div class="alert alert-{{ message.tags }}" role="alert" id="{{ forloop.counter }}">
+                {{ message }}
+                <span class="close" onclick="closeMessage({{ forloop.counter }})"></span>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    function closeMessage(id) {
+        document.getElementById(id).remove();
+    }
+</script>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n static author_tag news_tag settings_tag %}
+
+{% block title %}
+    <title>404 Page not found</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+    {% block page_header %}
+        <div class="page-header" style="position: relative; top: 50%">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <h1>404</h1>
+                        <h2 style="color: #fff;">{% trans 'Page not found' %}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock page_header %}>
+{% endblock header %}

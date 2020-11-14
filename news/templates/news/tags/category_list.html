@@ -1,0 +1,9 @@
+<div class="category-widget">
+    <ul>
+        {% for category in category_list %}
+            <li><a href="{{ category.get_absolute_url }}">
+                {{ category.title }} <span>{{ category.count_published }}</span>
+            </a></li>
+        {% endfor %}
+    </ul>
+</div>

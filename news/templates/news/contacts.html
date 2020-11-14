@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+    <title>Contacts</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+    {% block page_header %}
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <h1 class="text-uppercase">{% trans 'Contacts' %}</h1>
+                        <p class="lead">{% trans 'Have you any questions? Mail us!' %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock page_header %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="section-row">
+                <div class="section-title">
+                    <h2 class="title">{% trans 'Contact Information' %}</h2>
+                </div>
+                <p>{% trans 'We will reply to your email.' %}</p>
+                <ul class="contact">
+                    <li><i class="fa fa-phone"></i> {{ contacts.phone_number }}</li>
+                    <li><i class="fa fa-envelope"></i> <a href="#">{{ contacts.email }}</a></li>
+                    <li><i class="fa fa-map-marker"></i> {{ contacts.address }}</li>
+                </ul>
+            </div>
+
+            <div class="section-row">
+                <div class="section-title">
+                    <h2 class="title">{% trans 'Mail us' %}</h2>
+                </div>
+                <form action="{% url 'mail_us' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form.question_subject }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form.question_message }}
+                                </div>
+                        {{ form.captcha }}
+                        <button type="submit" class="primary-button">{% trans 'Submit' %}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

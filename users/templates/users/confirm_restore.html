@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+    <title>Submit account restore</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4" style="padding-top: 20px;">
+            <div class="section-row">
+                <h2 class="title" style="text-align: center;">{% trans 'Enter code we sent on your Email!' %}</h2>
+            </div>
+            <div class="section-row" style="margin-bottom: 20px;">
+                <form action="{% url 'confirm_restore' %}" method="post" id="sendForm">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.confirmation_code }}
+                                <div style="color: red">
+                                    {{ form.confirmation_code.errors }}
+                                    {{ form.non_field_errors}}
+                                </div>
+                                <p style="margin-top: 7px;">
+                                    <span style="font-size: 14px; font-weight: bold;">
+                                        <input type="hidden" name="resend" value="" id="resend_code">
+                                        <a role="button" onclick="sendForm()">{% trans 'Resend code' %}</a>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="primary-button" style="width: 100%;">{% trans 'Confirm' %}</button>
+                        </div>
+                    </div>
+                    {{ form.captcha }}
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /row -->
+
+    <script>
+        function sendForm() {
+            document.getElementById('resend_code').value = 'true';
+            document.getElementById('sendForm').submit();
+            }
+    </script>
+
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

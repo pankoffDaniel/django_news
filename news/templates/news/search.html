@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n static news_tag %}
+
+{% block title %}
+    <title>{{ user_search }}</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+    {% if search %}
+        {% block page_header %}
+            <div class="page-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10 text-center">
+                            <h1 class="text-uppercase">{% trans 'Post filter' %}: {{ user_search }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock page_header %}
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-8">
+            {% if page_obj.number == 1 %}
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            {% if post_list %}
+                                <h2 class="title">{% trans 'Recent posts' %}</h2>
+                            {% else %}
+                                <h2 class="title">{% trans 'Not found any posts' %}</h2>
+                                <br/>
+                                <h2 class="title">{% trans 'You can try to find another post!' %}</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            {% endif %}
+
+            {% show_post_list post_list %}
+            {% show_pagination_panel page_obj search %}
+        </div>
+        <div class="col-md-4">
+            {% include 'include/_sidebar.html' %}
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static news_tag %}
+
+{% block title %}
+    <title>{{ tag.title }}</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+    {% block page_header %}
+        <div class="page-header">
+            {% if tag.image %}
+                <div class="page-header-bg" style="background-image: url({{ tag.image.url }}"
+                     data-stellar-background-ratio="0.5"></div>
+            {% else %}
+                <div class="page-header-bg" data-stellar-background-ratio="0.5"></div>
+            {% endif %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <h1 class="text-uppercase">{{ tag.title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock page_header %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-8">
+            {% show_post_list post_list %}
+            {% show_pagination_panel page_obj %}
+        </div>
+        <div class="col-md-4">
+            {% include 'include/_sidebar.html' %}
+        </div>
+    </div>
+    <!-- /row -->>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

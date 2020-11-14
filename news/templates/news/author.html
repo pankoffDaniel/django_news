@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load i18n static author_tag news_tag settings_tag %}
+
+{% block title %}
+    <title>{{ author.first_name }} {{ author.last_name }}</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+    {% block page_header %}
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10 text-center">
+                        <div class="author">
+                            {% if author.avatar %}
+                                <img class="author-img center-block" src="{{ author.avatar.url }}" alt="{% trans 'Author avatar' %}">
+                            {% else %}
+                                {% get_site_settings as site_settings %}
+                                <img class="author-img center-block" src="{{ site_settings.author_avatar.url }}" alt="{% trans 'Author avatar' %}">
+                            {% endif %}
+                            <h1 class="text-uppercase">{{ author.first_name }} {{ author.last_name }}</h1>
+                            <p class="lead">{{ author.about }}</p>
+                            {% show_author_social_net_list author %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock page_header %}>
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-8">
+            {% show_post_list post_list %}
+            {% show_pagination_panel page_obj %}
+        </div>
+        <div class="col-md-4">
+            {% include 'include/_sidebar.html' %}
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

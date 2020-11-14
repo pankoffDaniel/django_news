@@ -1,0 +1,11 @@
+[settings]
+DEBUG=false
+ALLOWED_HOSTS=['www.fra1t.me', 'fra1t.me']
+INTERNAL_IPS=['127.0.0.1']
+DOMAIN_URL="https://www.fra1t.me"
+
+[smtp]
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT="465"
+EMAIL_USE_TLS=false
+EMAIL_USE_SSL=true

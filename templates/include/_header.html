@@ -1,0 +1,116 @@
+{% load i18n static category_tag settings_tag %}
+
+<header id="header">
+    <!-- NAV -->
+    <div id="nav">
+        <!-- Top Nav -->
+        <div id="nav-top">
+            <div class="container">
+                <!-- social -->
+                <ul class="nav-social">
+                    {% get_social_net_list as social_net_list %}
+                    {% for social_net in social_net_list %}
+                        {% if social_net.image %}
+                            <li><a href="{{ social_net.url }}">
+                                <img src="{{ social_net.image.url }}"
+                                     alt="{{ social_net.title }}"
+                                     style="width: 40px; position: relative; bottom: 2px;">
+                            </a></li>
+                        {% else %}
+                            <li><a href="{{ social_net.url }}">
+                                <i class="fa fa-{{ social_net.title.lower }}"></i>
+                            </a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <!-- /social -->
+
+                <!-- logo -->
+                <div class="nav-logo">
+                    {% get_site_settings as site_settings %}
+                    <a href="{% url 'home' %}" class="logo"><img src="{{ site_settings.logo_1_image.url }}" alt="Logo"></a>
+                </div>
+                <!-- /logo -->
+
+                <!-- search & aside toggle -->
+                <div class="nav-btns">
+                    <button class="aside-btn"><i class="fa fa-bars"></i></button>
+                    <button class="search-btn"><i class="fa fa-search"></i></button>
+                    <div id="nav-search">
+                        <form action="{% url 'search' %}" method="get">
+                            <label>
+                                <input class="input" name="search"
+                                       placeholder="{% trans 'Search' %}" autocomplete="off" required>
+                            </label>
+                        </form>
+                        <button class="nav-close search-close">
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- /search & aside toggle -->
+            </div>
+        </div>
+        <!-- /Top Nav -->
+
+        <!-- Main Nav -->
+        <div id="nav-bottom">
+            <div class="container">
+                <!-- nav -->
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                    <li><a href="{% url 'about' %}">{% trans 'About Us' %}</a></li>
+                    <li><a href="{% url 'contacts' %}">{% trans 'Contacts' %}</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                    <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
+                    {% endif %}
+                    <li>
+                        {% include 'include/_language.html' %}
+                    </li>
+                </ul>
+                <!-- /nav -->
+            </div>
+        </div>
+        <!-- /Main Nav -->
+
+        <!-- Aside Nav -->
+        <div id="nav-aside">
+            <ul class="nav-aside-menu">
+                <li>
+                    <a href="{% url 'home' %}">{% trans 'Home' %}</a>
+                </li>
+                <li class="has-dropdown">
+                    <a>{% trans 'Categories' %}</a>
+                    <ul class="dropdown">
+                        {% get_category_list as category_list %}
+                        {% for category in category_list %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}">{% trans 'About Us' %}</a>
+                </li>
+                <li>
+                    <a href="{% url 'contacts' %}">{% trans 'Contacts' %}</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                    <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
+                {% endif %}
+                <li style="margin-top: 20px">
+                    {% include 'include/_language.html' %}
+                </li>
+            </ul>
+            <button class="nav-close nav-aside-close"><span></span></button>
+        </div>
+        <!-- /Aside Nav -->
+    </div>
+    <!-- /NAV -->
+</header>

@@ -1,0 +1,10 @@
+__pycache__/
+.env
+.git
+.gitignore
+.idea
+Dockerfile
+docker-compose.yml
+dump.rdb
+db.sqlite3
+venv/

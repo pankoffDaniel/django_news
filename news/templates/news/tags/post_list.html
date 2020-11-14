@@ -1,0 +1,30 @@
+{% for post in post_list %}
+    <!-- post -->
+    <div class="post post-row">
+        <a class="post-img" href="{{ post.get_absolute_url }}">
+            <img src="{{ post.post_image.url }}" alt="News image">
+        </a>
+        <div class="post-body">
+            <div class="post-category">
+                <a href="{{ post.category.get_absolute_url }}">
+                    {{ post.category.title }}
+                </a>
+            </div>
+            <h3 class="post-title">
+                <a href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                </a>
+            </h3>
+            <ul class="post-meta">
+                <li>
+                    <a href="{{ post.author.get_absolute_url }}">
+                        {{ post.author.first_name }} {{ post.author.last_name }}
+                    </a>
+                </li>
+                <li>{{ post.created_at|date:"d M Y" }}</li>
+            </ul>
+            <p>{{ post.content|truncatewords:25|safe }}</p>
+        </div>
+    </div>
+    <!-- /post -->
+{% endfor %}

@@ -1,0 +1,46 @@
+{% load i18n static category_tag settings_tag news_tag message_tag %}
+<!-- category widget -->
+<div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">{% trans 'Categories' %}</h2>
+    </div>
+    {% show_category_list %}
+</div>
+<!-- /category widget -->
+
+<!-- newsletter widget -->
+<div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">{% trans 'Newsletter' %}</h2>
+    </div>
+    {% include 'include/_newsletter.html' %}
+</div>
+<!-- /newsletter widget -->
+
+<!-- post widget -->
+<div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">{% trans 'Popular Posts' %}</h2>
+    </div>
+    <!-- post -->
+    {% get_popular_post_list 5 as popular_post_list %}
+    {% for post in popular_post_list %}
+    <div class="post post-widget">
+        <a class="post-img" href="{{ post.get_absolute_url }}">
+            <img src="{{ post.post_image.url }}" alt="{% trans 'Image' %}">
+        </a>
+        <div class="post-body">
+            <div class="post-category">
+                <a href="{{ post.category.get_absolute_url }}">{{ post.category.title }}</a>
+            </div>
+            <h3 class="post-title">
+                <a href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                </a>
+            </h3>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- /post -->
+</div>
+<!-- /post widget -->

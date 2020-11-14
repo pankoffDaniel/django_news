@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+    <title>Sign Up</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+{% endblock header %}
+
+{% block content %}
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4" style="padding-top: 20px;">
+            <div class="section-row">
+                <h1 class="title" style="text-align: center;">{% trans 'Sign Up' %}</h1>
+            </div>
+            <div class="section-row" style="margin-bottom: 20px;">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.first_name }}
+                                <div style="color: red">
+                                    {{ form.first_name.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.last_name }}
+                                <div style="color: red">
+                                    {{ form.last_name.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.username }}
+                                <div style="color: red">
+                                    {{ form.username.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.email }}
+                                <div style="color: red">
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.password1 }}
+                                <div style="color: red">
+                                    {{ form.password1.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.password2 }}
+                                <div style="color: red">
+                                    {{ form.password2.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="primary-button" style="width: 100%;">{% trans 'Submit' %}</button>
+                        </div>
+                    </div>
+                    {{ form.captcha }}
+                </form>
+            </div>
+            <div class="section-row" style="text-align: center;">
+                <div class="section-title" style="margin-bottom: 10px;">
+                    <h2 class="title"></h2>
+                </div>
+                <h4>
+                    <a href="{% url 'login' %}">{% trans 'Already registered? Sign In!' %}</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

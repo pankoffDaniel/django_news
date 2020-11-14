@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load i18n static news_tag settings_tag %}
+
+{% block title %}
+    {% get_site_settings as site_settings %}
+    <title>{{ site_settings.title }}</title>
+{% endblock title %}
+
+{% block header %}
+    {% include 'include/_header.html' %}
+{% endblock header %}
+
+{% block content %}
+    {% if page_obj.number == 1 %}
+        <!-- row -->
+        {% if pinned_post_list_count > 0 %}
+            <div id="hot-post" class="row hot-post">
+            {% if pinned_post_list_count == 1 %}
+                <div class="col-md-12 hot-post-left">
+            {% else %}
+                <div class="col-md-8 hot-post-left">
+            {% endif %}
+        <!-- post -->
+        <div class="post post-thumb">
+            {% for pinned_post in pinned_post_list|slice:":1" %}
+                <a class="post-img" href="{{ pinned_post.get_absolute_url }}">
+                    <img src="{{ pinned_post.pinned_post.post_image.url }}" alt="{% trans 'Post image' %}">
+                </a>
+                <div class="post-body">
+                    <div class="post-category">
+                        <a href="{{ pinned_post.pinned_post.category.get_absolute_url }}">
+                            {{ pinned_post.pinned_post.category.title }}
+                        </a>
+                    </div>
+                    <h3 class="post-title title-lg">
+                        <a href="{{ pinned_post.get_absolute_url }}">
+                            {{ pinned_post.pinned_post.title }}
+                        </a>
+                    </h3>
+                    <ul class="post-meta">
+                        <li>
+                            <a href="{{ pinned_post.pinned_post.author.get_absolute_url }}">
+                                {{ pinned_post.pinned_post.author.first_name }} {{ pinned_post.pinned_post.author.last_name }}
+                            </a>
+                        </li>
+                        <li>{{ pinned_post.pinned_post.created_at|date:"d M Y" }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- /post -->
+        </div>
+        <div class="col-md-4 hot-post-right">
+            <!-- post -->
+            {% for pinned_post in pinned_post_list|slice:"1:" %}
+                <div class="post post-thumb">
+                    <a class="post-img" href="{{ pinned_post.get_absolute_url }}">
+                        <img src="{{ pinned_post.pinned_post.post_image.url }}" alt="{% trans 'Post image' %}">
+                    </a>
+                    <div class="post-body">
+                        <div class="post-category">
+                            <a href="{{ pinned_post.pinned_post.category.get_absolute_url }}">
+                                {{ pinned_post.pinned_post.category.title }}
+                            </a>
+                        </div>
+                        <h3 class="post-title">
+                            <a href="{{ pinned_post.get_absolute_url }}">
+                                {{ pinned_post.pinned_post.title }}
+                            </a>
+                        </h3>
+                        <ul class="post-meta">
+                            <li>
+                                <a href="{{ pinned_post.pinned_post.author.get_absolute_url }}">
+                                    {{ pinned_post.pinned_post.author.first_name }} {{ pinned_post.pinned_post.author.last_name }}
+                                </a>
+                            </li>
+                            <li>{{ pinned_post.pinned_post.created_at|date:"d M Y" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- /post -->
+        </div>
+        </div>
+        {% endif %}
+        <!-- /row -->
+    {% endif %}
+
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-8">
+            {% if page_obj.number == 1 %}
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h2 class="title">{% trans 'Recent posts' %}</h2>
+                        </div>
+                    </div>
+
+                    {% for recent_post in recent_post_list %}
+                        <!-- post -->
+                        <div class="col-md-6">
+                            <div class="post">
+                                <a class="post-img" href="{{ recent_post.get_absolute_url }}">
+                                    <img src="{{ recent_post.post_image.url }}" alt="{% trans 'Post image' %}">
+                                </a>
+                                <div class="post-body">
+                                    <div class="post-category">
+                                        <a href="{{ recent_post.category.get_absolute_url }}">
+                                            {{ recent_post.category.title }}
+                                        </a>
+                                    </div>
+                                    <h3 class="post-title">
+                                        <a href="{{ recent_post.get_absolute_url }}">
+                                            {{ recent_post.title }}
+                                        </a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li>
+                                            <a href="{{ recent_post.author.get_absolute_url }}">
+                                                {{ recent_post.author.first_name }} {{ recent_post.author.last_name }}
+                                            </a>
+                                        </li>
+                                        <li>{{ recent_post.created_at|date:"d M Y" }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /post -->
+                    {% endfor %}
+
+                </div>
+                <!-- /row -->
+            {% endif %}
+
+            {% show_post_list post_list %}
+            {% show_pagination_panel page_obj %}
+        </div>
+        <div class="col-md-4">
+            {% include 'include/_sidebar.html' %}
+        </div>
+    </div>
+    <!-- /row -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'include/_footer.html' %}
+{% endblock footer %}

@@ -1,0 +1,9 @@
+<ul class="author-social">
+    {% for social_net in author_social_net_list %}
+        {% for social_net_title, social_net_link in social_net.items %}
+            <li><a href="{{ social_net_link }}">
+                <i class="fa fa-{{ social_net_title }}"></i>
+            </a></li>
+        {% endfor %}
+    {% endfor %}
+</ul>

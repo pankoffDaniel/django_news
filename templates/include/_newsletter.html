@@ -1,0 +1,13 @@
+{% load i18n email_captcha_tag %}
+<div class="newsletter-widget">
+    <form action="{% url 'post_subscribe' %}" method="post">
+        {% csrf_token %}
+        <p>{% trans 'Subscribe to news posts' %}</p>
+        <label>
+            <input class="input" name="email" type="email" placeholder="{% trans 'Enter Your Email' %}" required>
+        </label>
+        {% get_email_subscription_captcha_form as form %}
+        {{ form.captcha }}
+        <button class="primary-button">{% trans 'Subscribe' %}</button>
+    </form>
+</div>

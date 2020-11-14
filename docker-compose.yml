@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13.0
+    restart: always
+    container_name: django_news_postgres
+    env_file:
+      - .env
+    volumes:
+      - ${POSTGRES_PATH_HOST}:${POSTGRES_PATH_CONTAINER}
+
+  adminer:
+    image: adminer:4.7.7
+    restart: always
+    container_name: django_news_adminer
+    ports:
+      - ${ADMINER_PORT}:${WEB_PORT}
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis:6.0.9
+    restart: always
+    container_name: django_news_redis
+
+  web:
+    build: .
+    restart: always
+    container_name: django_news_web
+    command: ./wait-for-postgres.sh -t 0 ${POSTGRES_HOST}:${POSTGRES_PORT} -- ./docker-entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+    - ./media:/django_news/media
+    - ./static:/django_news/static
+    ports:
+      - ${WEB_HOST}:${WEB_PORT}:${WEB_PORT}
+    depends_on:
+      - postgres
+      - redis
+
+  celery:
+    build: .
+    restart: always
+    container_name: django_news_celery
+    command: celery -A django_news worker -l INFO
+    env_file:
+      - .env
+    depends_on:
+      - web
+
+  flower:
+    build: .
+    restart: always
+    container_name: django_news_flower
+    command: flower -A django_news --port=${FLOWER_PORT}
+    env_file:
+      - .env
+    ports:
+      - ${FLOWER_HOST}:${FLOWER_PORT}:${FLOWER_PORT}
+    depends_on:
+      - celery
